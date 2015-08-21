@@ -56,7 +56,7 @@ var path = {
 /*
  * delete
  */
-gulp.task('del', function(){
+gulp.task('del', function () {
     del(path.tmp);
     del(path.dist);
 });
@@ -66,13 +66,13 @@ gulp.task('del', function(){
  */
 gulp.task('sprite', function () {
     var spriteData = gulp.src(path.sprite_src + 'sprite-sample/*.png')
-    .pipe(spritesmith({
-        imgName: 'sprite-sample.png',
-        cssName: 'sprite-sample.scss',
-        imgPath: '../img/sprite-sample.png',
-        cssFormat: 'scss',
-        padding: 5
-    }));
+        .pipe(spritesmith({
+            imgName: 'sprite-sample.png',
+            cssName: 'sprite-sample.scss',
+            imgPath: '../img/sprite-sample.png',
+            cssFormat: 'scss',
+            padding: 5
+        }));
     spriteData.img.pipe(gulp.dest(path.dist + 'img/'));
     spriteData.css.pipe(gulp.dest(path.scss_src + 'all/module/'));
 });
@@ -148,7 +148,7 @@ gulp.task('uglify', function () {
 
 
 // jshint
-gulp.task('jshint', function() {
+gulp.task('jshint', function () {
     return gulp.src(path.js_src + 'all/*.js')
         .pipe(plumber())
         .pipe(jshint())
@@ -161,7 +161,7 @@ gulp.task('jshint', function() {
  * html
  */
 // jade
-gulp.task('jade', function() {
+gulp.task('jade', function () {
     gulp.src('src/jade/html/**/*.jade')
         .pipe(plumber())
         .pipe(jade({
@@ -204,5 +204,3 @@ gulp.task('test', function () {
 
 // default
 gulp.task('default', gulpSequence('build:css', 'build:js', 'build:html'));
-
-
