@@ -1,0 +1,20 @@
+---
+title: トップ
+---
+<div>
+    <h2>{{content.h2}}</h2>
+    <img src="{{content.img}}">
+    <p>{{content.text}}</p>
+</div>
+<div>
+    <p><a href="/sub/sub.html">sub</a></p>
+</div>
+<div>
+    <ul>
+        {{#each array}}
+        <li>
+            <p>{{text}}</p>
+        </li>
+        {{/each}}
+    </ul>
+</div>
