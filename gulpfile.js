@@ -170,10 +170,12 @@ gulp.task('eslint', function () {
 // assemble
 var assemble = require('assemble');
 assemble.data(path.html_src + 'data/**/*.json');
-assemble.partial(path.html_src + 'include/**/*.hbs');
-assemble.layout(path.html_src + 'layout/**/*.hbs');
+assemble.helpers(path.html_src + 'helper/**/*.js');
+assemble.partials(path.html_src + 'include/**/*.hbs');
+assemble.layouts(path.html_src + 'layout/**/*.hbs');
 gulp.task('assemble', function() {
   assemble.data(path.html_src + 'data/**/*.json');
+  assemble.helpers(path.html_src + 'helper/**/*.js');
   assemble.partials(path.html_src + 'include/**/*.hbs');
   assemble.layouts(path.html_src + 'layout/**/*.hbs');
   assemble.src(path.html_src + 'html/**/*.hbs')
