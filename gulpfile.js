@@ -169,24 +169,25 @@ gulp.task('eslint', function () {
  */
 // assemble
 var assemble = require('assemble');
-assemble.data([path.html_src + 'data/**/*.{json,yml}']);
-//assemble.helper(path.html_src + 'helper/**/*.js');
+assemble.data(path.html_src + 'data/**/*.json');
 assemble.partial(path.html_src + 'include/**/*.hbs');
 assemble.layout(path.html_src + 'layout/**/*.hbs');
-gulp.task('html', function() {
-  gulp.src(path.html_src + 'html/**/*.hbs')
+gulp.task('assemble', function() {
+  assemble.data(path.html_src + 'data/**/*.json');
+  assemble.partials(path.html_src + 'include/**/*.hbs');
+  assemble.layouts(path.html_src + 'layout/**/*.hbs');
+  assemble.src(path.html_src + 'html/**/*.hbs')
     .pipe(plumber())
     .pipe(rename(function (path) {
       path.extname = '.html'
     }))
-    .pipe(gulp.dest(path.dist));
-});
-gulp.task('assemble', function() {
-  assemble.data([path.html_src + 'data/**/*.{json,yml}']);
-//  assemble.helper(path.html_src + 'helper/**/*.js');
-  assemble.partial(path.html_src + 'include/**/*.hbs');
-  assemble.layout(path.html_src + 'layout/**/*.hbs');
-  gulp.run('html');
+    .pipe(assemble.dest(path.dist));
+  assemble.src(path.html_src + 'html/*.hbs')
+    .pipe(plumber())
+    .pipe(rename(function (path) {
+    path.extname = '.html'
+    }))
+    .pipe(assemble.dest(path.dist));
 });
 
 
@@ -221,7 +222,7 @@ gulp.task('watch', function () {
   gulp.watch(path.js_src + '**/*.js', ['build:js']);
   gulp.watch(path.html_src + '**/*.hbs', ['build:html']);
   gulp.watch(path.img_src + '**/*.hbs', ['local']);
-  gulp.watch('Gulpfile.js', ['local']);
+  gulp.watch('gulpfile.js', ['local']);
 });
 
 
@@ -260,7 +261,7 @@ gulp.task('reload', function () {
 
 // build
 gulp.task('build', function () {
-  gulpSequence(['build:css', 'build:js', 'build:html', 'build:copy'], 'reload')();
+  gulpSequence('build:css', 'build:js', 'build:html', 'build:copy', 'reload')();
 });
 
 // default
